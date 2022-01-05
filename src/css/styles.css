@@ -12,25 +12,83 @@ body {
   line-height: 1.5;
 }
 
-#search-box {
-  font: inherit;
-  padding: 8px;
-  max-width: 320px;
-  margin-bottom: 16px;
-}
-
 li {
   list-style: none;
 }
 
-.country-list-item,
-.country-card-body-item {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+a {
+  text-decoration: none;
 }
 
-.country-list-item-name,
-.country-card-text {
-  margin-left: 20px;
+.search-form {
+  background-color: #5a5ada;
+  height: 50px;
+  display: block;
+  text-align: center;
+}
+
+input {
+  width: 400px;
+}
+
+button {
+  width: 180px;
+  cursor: pointer;
+}
+
+input,
+button {
+  font: inherit;
+  padding: 5px;
+  margin-top: 6px;
+}
+
+.load-more-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.is-hidden {
+  visibility: hidden;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.photo-card {
+  flex-basis: calc((100% - 10px * 8) / 4);
+  margin: 10px;
+  border: 1px solid #cdcdd0;
+  border-radius: 4px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.photo-card:hover {
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 4px 10px rgba(0, 0, 0, 0.06),
+    1px 4px 10px rgba(0, 0, 0, 0.16);
+}
+
+.info {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px;
+  font-size: 10px;
+}
+
+.info-item {
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 4px;
 }

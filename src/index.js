@@ -1,44 +1,80 @@
 import './css/styles.css';
-import debounce from 'lodash.debounce';
-import API from './js/fetchCountries';
+import cardTpl from './templates/cardTpl.hbs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import ApiService from './js/apiServise';
+// import axios from "axios";
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
-const DEBOUNCE_DELAY = 300;
+const gallery = document.querySelector('.gallery');
+gallery.addEventListener('click', onGalleryClick);
+const searchForm = document.querySelector('.search-form');
+searchForm.addEventListener('submit', onFormSubmit);
+const loadMoreBtn = document.querySelector('.load-more');
+loadMoreBtn.addEventListener('click',onClick)
+loadMoreBtn.classList.add('is-hidden');
 
-const inputEl = document.querySelector('input#search-box');
-const countryList = document.querySelector('.country-list');
-const countryInfo = document.querySelector('div.country-info');
-inputEl.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
+const apiService = new ApiService();
 
-function onSearch(e) {
-    e.preventDefault();
-    const searchQuery = e.target.value.trim();
-    console.log(searchQuery);
 
-    countryInfo.innerHTML = '';
-    countryList.innerHTML = '';
+function onFormSubmit(e) {
+  e.preventDefault();
+  apiService.query = e.currentTarget.elements.searchQuery.value;
 
-    if (searchQuery) {
-        API.fetchCountries(searchQuery)
-        .then(searchCountry)
-        .catch(onFetchError)
+  if (apiService.query === '') {
+    return Notify.failure("Sorry, there are no images matching your search query. Please try again.");;
+  }
+
+  loadMoreBtn.classList.remove('is-hidden');
+  apiService.resetPage();
+  clearGallery();
+  onClick();
+}
+
+function onClick() {  
+  apiService.fetchPhoto().then(hits => {
+    if (hits.length === 0) {
+      loadMoreBtn.classList.add('is-hidden');
+      return Notify.failure("Sorry, there are no images matching your search query. Please try again.");       
+  }
+    renderGallery(hits);
+    let quantity = hits.length * (apiService.page - 1);
+
+    if (hits.length > 0) {
+      Notify.info(`"Hooray! We found ${quantity} images."`);        
     }
+   
+    if (quantity === apiService.totalHits || quantity > apiService.totalHits) {
+      loadMoreBtn.classList.add('is-hidden');
+      Notify.warning("We're sorry, but you've reached the end of search results.");        
+    }
+  });  
+  
+}
+
+function renderGallery(hits) {
+  gallery.insertAdjacentHTML('beforeend', cardTpl(hits));  
+}
+
+function clearGallery() {
+  gallery.innerHTML = '';
+}
+
+function onGalleryClick(evt) {
+  evt.preventDefault();
+  let lightbox = new SimpleLightbox('.gallery a');
+
+    lightbox.options.captionsData = 'alt';       
+  lightbox.options.captionDelay = 250;
+  lightbox.refresh();
     
 }
 
-function searchCountry(countryName) { 
-    const list = countryListTpl(countryName);
-    const card = countryCardTpl(countryName);
-    if (countryName.length > 10) {
-        return Notify.info('Too many matches found. Please enter a more specific name');    
-    };
-    if (1 < countryName.length && countryName.length < 10) {
-        return countryList.innerHTML = list;        
-    };
+// // axios.get('/users')
+// //   .then(res => {
+// //     console.log(res.data);
+// //   });
 
-    return countryInfo.innerHTML = card;
-}
 
-function onFetchError() {
-        Notify.failure('Oops, there is no country with that name');    
-}
+
+
