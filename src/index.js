@@ -47,7 +47,7 @@ function onClick() {
       loadMoreBtn.classList.add('is-hidden');
       Notify.warning("We're sorry, but you've reached the end of search results.");        
     }
-  });  
+  }).then(smoothScroll);  
   
 }
 
@@ -69,8 +69,11 @@ function onGalleryClick(evt) {
     
 }
 
+function smoothScroll() {
+  const { height: cardHeight } = gallery.firstElementChild.getBoundingClientRect();
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 
-
-
-
-
+}
