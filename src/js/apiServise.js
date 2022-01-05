@@ -1,5 +1,6 @@
 const BASE_URL = 'https://pixabay.com/api/';
 const KEY = '24990805-177fdba4f9c4ee8f853f6b4d2';
+const axios = require('axios');
 
 export default class ApiService{
     constructor() {
@@ -9,32 +10,17 @@ export default class ApiService{
         this.totalHits = null;
   };
   
-fetchPhoto() {  
-    // console.log('fetch',this)
-
-
-    return fetch(`${BASE_URL}?key=${KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=${this.per_page}`)
+  
+async fetchPhoto() {  
+    const url=`${BASE_URL}?key=${KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=${this.per_page}`
     
-        .then(response => {
-            //    console.log('response',this)          
-         
-            if (!response.ok) {
-                throw new Error(response.status);
-            }
-           
-            // console.log('response', response.json());
-            return response.json();
-        })
-        .then(({ hits,totalHits }) => {
-           this.totalHits = totalHits
-         
-         this.incrementPage();
-        //  console.log('hits',hits);
-       
-         return hits;
-         
-      });
-    
+    const fetch = await axios.get(url);
+    const hits = fetch.data.hits;
+    const totalHits = fetch.data.totalHits;
+    this.totalHits = totalHits;
+    this.incrementPage();
+    console.log(fetch.data);
+    return hits;
 }
     incrementPage() {
         this.page += 1;
@@ -52,3 +38,5 @@ fetchPhoto() {
         this.searchQuery=newQuery;
     }
 }
+
+

@@ -21,7 +21,7 @@ a {
 }
 
 .search-form {
-  background-color: #5a5ada;
+  background-color: #a3d0c3;
   height: 50px;
   display: block;
   text-align: center;
@@ -29,11 +29,23 @@ a {
 
 input {
   width: 400px;
+  border: 2px solid #7ba7ab;
+  border-radius: 10px;
+  outline: none;
+  background: #f9f0da;
+  color: #9e9c9c;
 }
 
 button {
   width: 180px;
   cursor: pointer;
+  color: #fafafa;
+  border-radius: 10px;
+
+  background: #7ba7ab;
+  border-width: 2px;
+  border-style: initial;
+  border-color: #5f8b8f;
 }
 
 input,
@@ -55,27 +67,32 @@ button {
 
 img {
   display: block;
+  height: 84%;
   width: 100%;
+  object-fit: cover;
+  transition: transform cubic-bezier(0.4, 0, 0.2, 1) 250ms;
 }
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  max-width: 1140px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-auto-rows: 240px;
+  grid-gap: 12px;
+  justify-content: center;
+  margin: 10px auto;
 }
 
 .photo-card {
-  flex-basis: calc((100% - 10px * 8) / 4);
-  margin: 10px;
-  border: 1px solid #cdcdd0;
-  border-radius: 4px;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
-    1px 4px 6px rgba(0, 0, 0, 0.16);
-  cursor: pointer;
   overflow: hidden;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 4px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  cursor: zoom-in;
 }
 
 .photo-card:hover {
-  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 4px 10px rgba(0, 0, 0, 0.06),
-    1px 4px 10px rgba(0, 0, 0, 0.16);
+  transform: scale(1.03);
 }
 
 .info {
@@ -85,6 +102,7 @@ img {
   align-items: center;
   padding: 3px;
   font-size: 10px;
+  color: #212121;
 }
 
 .info-item {

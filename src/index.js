@@ -2,7 +2,6 @@ import './css/styles.css';
 import cardTpl from './templates/cardTpl.hbs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import ApiService from './js/apiServise';
-// import axios from "axios";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
@@ -70,10 +69,7 @@ function onGalleryClick(evt) {
     
 }
 
-// // axios.get('/users')
-// //   .then(res => {
-// //     console.log(res.data);
-// //   });
+
 
 
 
