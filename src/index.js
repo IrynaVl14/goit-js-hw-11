@@ -23,6 +23,7 @@ function onFormSubmit(e) {
   if (apiService.query === '') {
     return Notify.failure("Sorry, there are no images matching your search query. Please try again.");
   }
+
   
   apiService.resetPage();
   clearGallery();
@@ -36,14 +37,12 @@ function onClick() {
       return Notify.failure("Sorry, there are no images matching your search query. Please try again.");       
   }
     renderGallery(hits);
-    let quantity = hits.length * (apiService.page - 1);
-    
-
-    if (hits.length > 0) {
-      Notify.info(`"Hooray! We found ${quantity} images."`);        
-    }
    
-    if (quantity === apiService.totalHits || quantity > apiService.totalHits) {
+     if (hits.length > 0) {
+      Notify.info(`"Hooray! We found ${apiService.totalHits} images."`);        
+    }       
+   
+    if (hits.length === apiService.totalHits || hits.length > apiService.totalHits) {
       loadMoreBtn.classList.add('is-hidden');
       Notify.warning("We're sorry, but you've reached the end of search results.");        
     }
