@@ -37,9 +37,10 @@ function onClick() {
       return Notify.failure("Sorry, there are no images matching your search query. Please try again.");       
   }
     renderGallery(hits);
-   
-     if (hits.length > 0) {
-      Notify.info(`"Hooray! We found ${apiService.totalHits} images."`);        
+
+  
+     if (hits.length > 0 && apiService.page===2) {
+       Notify.info(`"Hooray! We found ${apiService.totalHits} images."`);    
     }       
    
     if (hits.length === apiService.totalHits || hits.length > apiService.totalHits) {
